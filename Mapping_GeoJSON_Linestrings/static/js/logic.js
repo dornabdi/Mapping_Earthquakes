@@ -1,12 +1,11 @@
 // Add console.log to check to see if our code is working.
 console.log("working");
 
-// Create the map object with center and zoom level.
-let map = L.map('mapid').setView([30, 30], 2);
-
+// // Create the map object with center and zoom level.
+// let map = L.map('mapid').setView([30, 30], 2);
 
 // We create the tile layer that will be the background of our map.
-let streets = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",    maxZoom: 18,
     id: "mapbox/outdoors-v11",
     maxZoom : 18,
@@ -28,7 +27,7 @@ let baseMaps = {
 
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
-  center: [30, 30],
+  center: [44.0, -80.0],
   zoom: 2,
   layers: [streets]
 })
@@ -39,14 +38,27 @@ L.control.layers(baseMaps).addTo(map);
   // Then we add our 'graymap' tile layer to the map.
 streets.addTo(map);
 
-  // Accessing the airport GeoJSON URL
-let airportData = "https://raw.githubusercontent.com/dornabdi/Mapping_Earthquakes/Mapping_GeoJSON_Points/majorAirports.json";
+// Accessing the Toronto airline routes GeoJSON URL.
+let torontoData = "https://raw.githubusercontent.com/dornabdi/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/majorAirports.json";
+
+// Create a style for the lines.
+let myStyle = {
+  color: "#ffffa1",
+  weight: 2
+}
 
 // Grabbing our GeoJSON data.
-d3.json(airportData).then(function(data) {
+d3.json(torontoData).then(function(data) {
   console.log(data);
-  // Creating a GeoJSON layer with the retrieved data.
-  L.geoJson(data).addTo(map);
+// Creating a GeoJSON layer with the retrieved data.
+  L.geoJson(data, {
+    style: myStyle, 
+    onEachFeature: function(feature, layer) {
+      layer.bindPopup("<h3> Airline: " + feature.properties.airline + "</h3> <hr><h3> Destination: "
+      + feature.properties.dst + "<h3>");
+    }
+  })
+.addTo(map);
 });
 
 
