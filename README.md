@@ -5,13 +5,13 @@ In this project, I used the two different earthquake maps and the earthquake ove
 
 ### Deliverable 1
 Add Tectonic Plate Data
-![d1](d1.png)
+![d1](images/d1.png)
 
 ### Deliverable 2
 Add Major Earthquake Data
-![d2](d2.png)
+![d2](images/d2.png)
 
 ### Deliverable 3
 Add an Additional Map
-![d3](d3.png)
+![d3](images/d3.png)
 
